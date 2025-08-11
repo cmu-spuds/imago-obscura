@@ -4,7 +4,10 @@ This is the website for the Imago Obscura project.
 
 ## Paper
 
-[[ARXIV] Imago Obscura: An Image Privacy AI Co-pilot to Enable Identification and Mitigation of Risks](https://arxiv.org/abs/2505.20916)
+[![arXiv](https://img.shields.io/badge/arXiv-2505.20916-b31b1b.svg)](https://arxiv.org/abs/2505.20916)
+
+[Imago Obscura: An Image Privacy AI Co-pilot to Enable Identification and Mitigation of Risks](https://arxiv.org/abs/2505.20916)
+
 To appear at UIST 2025.
 
 ## Demo
