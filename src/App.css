@@ -1,0 +1,494 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: #ffffff; /* light mode */
+  color: #111827;
+  line-height: 1.6;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 2.25rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Title block groups everything that should be replaced by the video */
+.title-block {
+  display: block;
+}
+
+/* University logos header */
+.university-logos {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+  gap: 2rem;
+}
+
+.logo-item {
+  text-align: center;
+}
+
+.logo-item a {
+  display: inline-block;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.logo-item a:hover {
+  opacity: 0.8;
+  transform: translateY(-2px);
+}
+
+.university-logo {
+  height: 80px;
+  width: auto;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.university-logo:hover {
+  opacity: 1;
+}
+
+/* Individual logo adjustments to match the image exactly */
+.cmu-logo {
+  height: 70px;
+}
+
+.hcii-logo {
+  height: 80px;
+}
+
+.tsinghua-logo {
+  height: 90px;
+}
+
+/* UIST 25 Conference section */
+.conference-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 4rem;
+}
+
+.uist-logo-link {
+  display: inline-block;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.uist-logo-link:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.uist-logo-img {
+  height: 50px;
+  width: auto;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.uist-logo-img:hover {
+  opacity: 1;
+}
+
+.location {
+  font-size: 1rem;
+  color: #666;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  margin-left: 1rem;
+}
+
+/* Main content */
+.hero {
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+  /* margin-top: 0.5rem; */
+  font-size: 1.50rem;
+  color: #4b5563;
+}
+
+.authors-list {
+  margin-top: 1.25rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.author {
+  min-width: 260px;
+  text-align: center;
+}
+
+.author-name,
+.author-institution,
+.author-location {
+  font-size: 1.1rem; /* unified size */
+  color: #1f2937;
+}
+
+.cta-group {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+}
+
+.teaser-container {
+  margin: 3rem auto; /* center horizontally */
+  max-width: 1100px;
+  display: flex;
+  justify-content: center;
+}
+
+.teaser-img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  display: block;
+}
+
+.image-wrapper {
+  position: relative;
+  cursor: zoom-in;
+}
+
+.image-wrapper .image-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  margin: 0 auto;
+  padding: 0.35rem 0.6rem;
+  max-width: 90%;
+  background: rgba(17, 24, 39, 0.75);
+  color: #fff;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.image-wrapper:hover .image-caption {
+  /* show caption only on click (lightbox), not on hover */
+  opacity: 0;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  cursor: zoom-out;
+}
+
+.lightbox-content {
+  max-width: 95vw;
+  max-height: 95vh;
+  text-align: center;
+}
+
+.lightbox-content img {
+  max-width: 95vw;
+  max-height: 85vh;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+}
+
+.lightbox-caption {
+  margin-top: 0.75rem;
+  color: #f9fafb;
+}
+
+.btn {
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #111827;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.btn:hover {
+  background: #f3f4f6;
+}
+
+.btn-primary {
+  border-color: #3b82f6; /* formal blue */
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.btn-secondary {
+  background: transparent;
+}
+
+.abstract-card {
+  margin: 3rem auto 0;
+  background: #ffffff;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: justify;
+  max-width: 1100px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* Sections below abstract */
+.section {
+  max-width: 1100px;
+  margin: 5.75rem auto 0; /* extra top spacing between sections */
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111827;
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.section p {
+  color: #374151;
+  margin-top: 0.5rem;
+  line-height: 1.75;
+}
+
+.dr-list {
+  list-style: none;
+  padding: 0;
+  max-width: 1100px;
+  margin: 0 auto;
+  color: #1f2937;
+}
+
+.dr-item {
+  margin: 0.6rem 0;
+  font-size: 1.35rem;
+  text-align: left;
+  margin-left: 1.25rem;
+}
+
+.dr-k {
+  font-weight: 800;
+}
+
+.methodology-figure img.methodology-img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  display: block;
+  margin-top: 1rem;
+}
+
+.risk-row {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.risk-title {
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.risk-figure img.risk-img,
+.how-figure img.how-img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  display: block;
+}
+
+/* Citation block */
+.code-block {
+  position: relative;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 1rem;
+  overflow-x: auto;
+  text-align: left;
+}
+
+.code-block pre { margin: 0; }
+
+.copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #111827;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* stack by default for better small-screen spacing */
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.result-card img.result-img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  display: block;
+}
+
+.results-bullets ul {
+  list-style: disc;
+  margin: 0.5rem 0 1rem 1.25rem;
+  color: #1f2937;
+  text-align: left;
+}
+
+.results-bullets li {
+  margin-bottom: 0.65rem;
+}
+
+.results-note {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+}
+
+@media (min-width: 900px) {
+  .results-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Implementation description under image */
+.how-description {
+  margin-top: 0.75rem;
+  color: #374151;
+}
+
+.expand-abstract-btn { display: none; }
+
+.read-more-link {
+  margin-left: 0.35rem;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.read-more-link:hover {
+  text-decoration: underline;
+}
+
+.abstract-card .more {
+  display: none;
+}
+
+.abstract-card.expanded .more {
+  display: block;
+}
+
+.authors {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #333;
+  margin-top: 1.5rem;
+}
+
+.affiliation {
+  font-size: 1.2rem;
+  color: #444;
+  margin-top: 0.5rem;
+}
+
+/* Video styles removed: we open YouTube in a new tab */
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .app {
+    padding: 1.25rem;
+  }
+  
+  .university-logos {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .university-logo {
+    height: 50px;
+  }
+  
+  .cmu-logo {
+    height: 45px;
+  }
+  
+  .hcii-logo {
+    height: 50px;
+  }
+  
+  .tsinghua-logo {
+    height: 55px;
+  }
+  
+  .conference-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .location {
+    margin-left: 0;
+  }
+  
+  .main-title {
+    font-size: 3.25rem;
+  }
+  
+  .subtitle h2,
+  .subtitle h3 {
+    font-size: 1.8rem;
+  }
+  
+  .authors {
+    font-size: 1.3rem;
+  }
+  
+  /* video styles removed in mobile as well */
+}
