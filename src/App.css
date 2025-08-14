@@ -124,8 +124,20 @@ body {
 
 .hero-subtitle {
   /* margin-top: 0.5rem; */
-  font-size: 1.50rem;
+  font-size: 1.6rem;
   color: #4b5563;
+}
+
+/* Conference badge */
+.conference-badge {
+  display: inline-block;
+  margin-top: 0.2rem;
+  padding: 0.18rem 0.5rem;
+  font-size: 0.85rem;
+  color: #6b7280; /* lighter gray */
+  background: #fafafa;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
 }
 
 .authors-list {
@@ -155,11 +167,31 @@ body {
   margin-top: 2.5rem;
 }
 
+.cta-group .conference-badge {
+  align-self: center;
+}
+
 .teaser-container {
-  margin: 3rem auto; /* center horizontally */
+  margin: 2rem auto; /* center horizontally */
   max-width: 1100px;
   display: flex;
   justify-content: center;
+}
+
+/* Embedded YouTube video above title */
+.video-container {
+  margin: 0 auto 1.5rem auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.video-embed {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 }
 
 .teaser-img {
@@ -239,13 +271,13 @@ body {
 }
 
 .btn-primary {
-  border-color: #3b82f6; /* formal blue */
-  background: #3b82f6;
+  border-color: #111827; /* black */
+  background: #111827;
   color: #ffffff;
 }
 
 .btn-primary:hover {
-  background: #2563eb;
+  background: #000000;
   color: #ffffff;
 }
 
@@ -263,6 +295,76 @@ body {
   text-align: justify;
   max-width: 1100px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* Collapsible abstract synced to video height */
+.abstract-card.collapsed {
+  position: relative;
+  max-height: var(--video-height, 320px);
+  overflow: hidden;
+}
+
+.abstract-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4rem;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+}
+
+.read-more-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.6rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* Subtle chevron control */
+.chevron-btn {
+  border: 1px solid #e5e7eb;
+  background: rgba(255,255,255,0.9);
+  color: #111827;
+  border-radius: 999px;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.chevron-btn:hover {
+  background: #ffffff;
+}
+
+.read-more-overlay.expanded {
+  position: static;
+  margin-top: 0.5rem;
+}
+
+/* Abstract + video side-by-side layout */
+.abstract-media {
+  max-width: 1100px;
+  margin: 2.5rem auto 0;
+  display: grid;
+  grid-template-columns: 2fr 3fr; /* video left (2/5), abstract right (3/5) */
+  gap: 1rem;
+  align-items: start;
+}
+
+.abstract-media .abstract-card {
+  margin: 0; /* handled by grid container */
+}
+
+.abstract-media .video-container {
+  margin: 0; /* align with grid */
+  justify-content: flex-start; /* align video flush left within its column */
 }
 
 /* Sections below abstract */
@@ -367,11 +469,20 @@ body {
   align-items: start;
 }
 
-.result-card img.result-img {
-  width: 100%;
-  height: auto;
+.result-card .image-wrapper {
+  height: 260px; /* normalize card heights */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
   border-radius: 10px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.result-card img.result-img {
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
   display: block;
 }
 
@@ -402,6 +513,18 @@ body {
 .how-description {
   margin-top: 0.75rem;
   color: #374151;
+}
+
+/* Discussion bullets */
+.discussion-bullets ul {
+  list-style: disc;
+  margin: 0.5rem 0 0 1.25rem;
+  color: #1f2937;
+  text-align: left;
+}
+
+.discussion-bullets li {
+  margin-bottom: 0.65rem;
 }
 
 .expand-abstract-btn { display: none; }
@@ -443,6 +566,19 @@ body {
 @media (max-width: 768px) {
   .app {
     padding: 1.25rem;
+  }
+  .abstract-media {
+    display: block;
+  }
+  .video-embed {
+    width: 100%;
+  }
+  .result-card .image-wrapper {
+    height: 200px; /* slightly shorter on mobile */
+  }
+  /* On mobile, let abstract expand by default */
+  .abstract-card.collapsed {
+    max-height: none;
   }
   
   .university-logos {

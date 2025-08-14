@@ -1,15 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 function App() {
-  const [showAbstract, setShowAbstract] = useState(true)
+  const [showAbstract, setShowAbstract] = useState(false)
   const baseUrl = import.meta.env.BASE_URL || '/'
   const paperUrl = 'https://arxiv.org/pdf/2505.20916'
   const [lightboxSrc, setLightboxSrc] = useState('')
   const [lightboxCaption, setLightboxCaption] = useState('')
   const [copiedCitation, setCopiedCitation] = useState(false)
-  const abstractIntro = `Users often struggle to navigate the privacy / publicity boundary in sharing images online: they may lack awareness of image privacy risks or the ability to apply effective mitigation strategies. To address this challenge, we introduce and evaluate Imago Obscura, an intent-aware AI-powered image-editing copilot that enables users to identify and mitigate privacy risks in images they intend to share.`
-  const abstractRest = ` Driven by design requirements from a formative user study with 7 image-editing experts, Imago Obscura enables users to articulate their image-sharing intent and privacy concerns. The system uses these inputs to surface contextually pertinent privacy risks, and then recommends and facilitates application of a suite of obfuscation techniques found to be effective in prior literature — e.g., inpainting, blurring, and generative content replacement. We evaluated Imago Obscura with 15 end-users in a lab study and found that it improved users’ awareness of image privacy risks and their ability to address them, enabling more informed sharing decisions.`
+  const videoRef = useRef(null)
+  const [videoHeight, setVideoHeight] = useState(0)
+  const abstractP1 = `Users often struggle to navigate the privacy / publicity boundary in sharing images online: they may lack awareness of image privacy risks or the ability to apply effective mitigation strategies. To address this challenge, we introduce and evaluate Imago Obscura, an intent-aware AI-powered image-editing copilot that enables users to identify and mitigate privacy risks in images they intend to share.`
+  const abstractP2 = `Driven by design requirements from a formative user study with 7 image-editing experts, Imago Obscura enables users to articulate their image-sharing intent and privacy concerns. The system uses these inputs to surface contextually pertinent privacy risks, and then recommends and facilitates application of a suite of obfuscation techniques found to be effective in prior literature — e.g., inpainting, blurring, and generative content replacement.`
+  const abstractP3 = `We evaluated Imago Obscura with 15 end-users in a lab study and found that it improved users’ awareness of image privacy risks and their ability to address them, enabling more informed sharing decisions.`
   const citationBibtex = `@article{monteiro2025imago,\n  title={Imago Obscura: An Image Privacy AI Co-pilot to Enable Identification and Mitigation of Risks},\n  author={Monteiro, Kyzyl and Wu, Yuchen and Das, Sauvik},\n  journal={arXiv preprint arXiv:2505.20916},\n  year={2025}\n}`
 
   // no-op
@@ -24,6 +27,24 @@ function App() {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
+  // Keep abstract height synced with video height (when collapsed)
+  useEffect(() => {
+    const updateHeights = () => {
+      if (videoRef.current) {
+        const rect = videoRef.current.getBoundingClientRect()
+        setVideoHeight(rect.height)
+      }
+    }
+    updateHeights()
+    const resizeObserver = new ResizeObserver(updateHeights)
+    if (videoRef.current) resizeObserver.observe(videoRef.current)
+    window.addEventListener('resize', updateHeights)
+    return () => {
+      window.removeEventListener('resize', updateHeights)
+      try { resizeObserver.disconnect() } catch {}
+    }
   }, [])
 
   const openLightbox = (src, caption) => {
@@ -42,7 +63,6 @@ function App() {
   return (
     <div className="app">
       <div className="title-block hero">
-
           <div className="teaser-container">
             <div
               className="image-wrapper"
@@ -61,6 +81,7 @@ function App() {
             </div>
           </div>
           <div className="hero-header">
+            <div className="conference-badge">To appear at UIST 2025</div>
             <h1 className="hero-title">Imago Obscura</h1>
             <p className="hero-subtitle">An Image Privacy AI Co-pilot to Enable Identification and Mitigation of Risks</p>
           </div>
@@ -85,27 +106,58 @@ function App() {
           </div>
 
           <div className="cta-group">
-            <button className="btn btn-secondary" onClick={() => window.open(paperUrl, '_blank')}>Read Paper</button>
+            <button className="btn btn-primary" onClick={() => window.open(paperUrl, '_blank')}>Read Paper</button>
             <button className="btn btn-secondary" onClick={() => window.open('https://www.youtube.com/watch?v=5uK24bBIKj8', '_blank')}>Watch Demo</button>
           </div>
 
-          <div className={`abstract-card`}>
-            <p>
-              {abstractIntro}
-              {showAbstract ? (
-                <>{abstractRest}</>
-              ) : (
+          <div className="abstract-media">
+            <div className="video-container" ref={videoRef}>
+              <iframe
+                className="video-embed"
+                src="https://www.youtube.com/embed/5uK24bBIKj8"
+                title="Imago Obscura Demo"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
+            </div>
+            <div
+              className={`abstract-card ${showAbstract ? '' : 'collapsed'}`}
+              style={!showAbstract && videoHeight ? ({ ['--video-height']: `${videoHeight}px` }) : undefined}
+            >
+              <p>{abstractP1}</p>
+              <p>{abstractP2}</p>
+              <p>{abstractP3}</p>
+              {!showAbstract && (
                 <>
-                  <a
-                    href="#read-more"
-                    className="read-more-link"
-                    onClick={(e) => { e.preventDefault(); setShowAbstract(true) }}
-                  >
-                    Read more
-                  </a>
+                  <div className="abstract-fade" />
+                  <div className="read-more-overlay">
+                    <button
+                      className="chevron-btn"
+                      aria-label="Expand abstract"
+                      onClick={() => setShowAbstract(true)}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M6 9l6 6 6-6" />
+                      </svg>
+                    </button>
+                  </div>
                 </>
               )}
-            </p>
+              {showAbstract && (
+                <div className="read-more-overlay expanded">
+                  <button
+                    className="chevron-btn"
+                    aria-label="Collapse abstract"
+                    onClick={() => setShowAbstract(false)}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M18 15l-6-6-6 6" />
+                    </svg>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Examples Section */}
@@ -226,19 +278,32 @@ function App() {
             <div className="results-bullets">
               <ul>
                 <li>
-                  <strong>Awareness</strong> Participants identified more risks per image.
+                  <strong>Overcomes key barriers to adopting pro-privacy behaviors</strong> Motivation, Awareness and Ability all increased
                 </li>
                 <li>
-                  <strong>Ability</strong> Participants selected more suitable obfuscations.
+                  <strong>Empowers informed decision-making</strong> Users make better choices about what to share and what to protect
                 </li>
                 <li>
-                  <strong>Confidence to share</strong> 5× increase in overall confidence • 80× increase on previously withheld images <br />
-                  <span className="results-note">Measured via self-reported confidence in our study.</span>
+                  <strong>Confidence to share increases significantly </strong> 5× increase for images overall • 80× increase for previously withheld images <br />
                 </li>
               </ul>
             </div>
           </div>
 
+          {/* Discussion Section */}
+          <div className="section discussion-section">
+            <h2 className="section-title">Discussion</h2>
+            <div className="discussion-bullets">
+              <ul>
+                <li>
+                  <strong>Privacy vs authenticity</strong> Users are mindful of this tradeoff but content provenance is needed.
+                </li>
+                <li>
+                  <strong>Need to foster agency while preventing over-reliance</strong> by spreading risk awareness but avoiding overemphasis
+                </li>
+              </ul>
+            </div>
+          </div>
           {/* Citation Section */}
           <div className="section citation-section">
             <h2 className="section-title">Citation</h2>
